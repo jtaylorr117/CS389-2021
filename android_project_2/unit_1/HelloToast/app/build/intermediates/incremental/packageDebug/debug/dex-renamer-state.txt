@@ -1,0 +1,4 @@
+#Tue Mar 09 22:18:29 EST 2021
+base.0=/Users/johntaylor/Documents/School/spring2021/software-eng./CS389-2021/android_project_2/unit_1/HelloToast/app/build/intermediates/transforms/dexMerger/debug/0
+path.0=classes.dex
+renamed.0=classes.dex

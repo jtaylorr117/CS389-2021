@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/Users/johntaylor/Documents/School/spring2021/software-eng./CS389-2021/android_project_2/unit_1/HelloToast/app/src/main/jniLibs"/></dataSet><dataSet config="debug"><source path="/Users/johntaylor/Documents/School/spring2021/software-eng./CS389-2021/android_project_2/unit_1/HelloToast/app/src/debug/jniLibs"/></dataSet></merger>
