@@ -4,11 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
+import android.app.SharedElementCallback;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -24,49 +28,55 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    private TextView tValidityCheck;
-    private Button mButton;
-    private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private Button dateButton;
+    private DatePicker picker;
     private int userAge;
+
+    //CONSTANTS USED FOR SHARED PREFS TO LOAD USER AGE IF THEY ALREADY ENTEREED IT ON A PREVIOUS LOAD
+    public static final String SHAREDPREFS = "sharedprefs";
+    public static final String AGE = "userage";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mButton = (Button) findViewById(R.id.button);
+        //Sets up variables used by Date Picker
+        picker = (DatePicker)findViewById(R.id.datePicker1);
+        dateButton = (Button) findViewById(R.id.button1);
 
-        tValidityCheck= (TextView)findViewById(R.id.tvValidity);
+        //loads the saved user age if there is one
+        loadData();
 
-        mButton.setOnClickListener(new View.OnClickListener(){
-           @Override
-            public void onClick(View view) {
-               Calendar cal = Calendar.getInstance();
-               int year = cal.get(Calendar.YEAR);
-               int month = cal.get(Calendar.MONTH);
-               int day = cal.get(Calendar.DAY_OF_MONTH);
+        //Changes the screen automatically if the age data was already stored
+        if(userAge != -1 && userAge >= 21){
+            setContentView(R.layout.activity_main_menu_screen);
+        }else if(userAge != -1 && userAge < 21){
+            setContentView(R.layout.activity_main2);
+        }
 
-               DatePickerDialog dialog = new DatePickerDialog(MainActivity.this, android.R.style.Theme_Holo, mDateSetListener, year, month, day);
 
-               //Makes date picker window transparent
-               dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-               dialog.show();
-           }
-        });
-
-        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+        dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                userAge = getAge(year,month,dayOfMonth);
+            public void onClick(View v) {
+               // tvw.setText("Selected Date: "+ picker.getDayOfMonth()+"/"+ (picker.getMonth() + 1)+"/"+picker.getYear());
+                userAge = getAge(picker.getYear(),picker.getMonth(),picker.getDayOfMonth());
+
+                //saves the user age so it can be loaded on startup
+                saveData();
+
                 if(userAge < 21){
-                    tValidityCheck.setText("You are NOT 21 or older!");
-                }else{
-                    tValidityCheck.setText("You are at least 21 years old!");
+                    setContentView(R.layout.activity_main2);
+                }else
+                {
+                    setContentView(R.layout.activity_main_menu_screen);
                 }
             }
-        };
+        });
 
     }
+
+    //Calculates the users age based on the data given in the date picker
     public static int getAge(int year, int month, int date) {
 
         Calendar dateOfBirth = Calendar.getInstance();
@@ -87,5 +97,22 @@ public class MainActivity extends AppCompatActivity {
         } else if (currentDate.get(Calendar.MONTH) < dateOfBirth.get(Calendar.MONTH))
             age = age - 1;
         return age;
+    }
+
+
+    //Saves the user's age data in shared preferences
+    public void saveData(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHAREDPREFS,MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putInt(AGE,userAge);
+        editor.apply();
+    }
+
+    //Loads the user's age data in shared preferences
+    public void loadData(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHAREDPREFS,MODE_PRIVATE);
+        userAge = sharedPreferences.getInt(AGE,-1);
+
     }
 }
