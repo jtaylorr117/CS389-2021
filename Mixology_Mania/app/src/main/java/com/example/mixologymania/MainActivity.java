@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Changes the screen automatically if the age data was already stored
         if(userAge != -1 && userAge >= 21){
+            startActivity(new Intent(getApplicationContext(), main_menu_screen.class));
             setContentView(R.layout.activity_main_menu_screen);
         }else if(userAge != -1 && userAge < 21){
             setContentView(R.layout.activity_main2);
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
                     setContentView(R.layout.activity_main2);
                 }else
                 {
+                    startActivity(new Intent(getApplicationContext(), main_menu_screen.class));
                     setContentView(R.layout.activity_main_menu_screen);
                 }
             }

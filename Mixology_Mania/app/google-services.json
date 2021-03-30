@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "4057727103",
+    "project_id": "mixology-test",
+    "storage_bucket": "mixology-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:4057727103:android:728a7b246c7ef7e04e3f4a",
+        "android_client_info": {
+          "package_name": "com.example.mixologymania"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "4057727103-1mfsj24i2bd7g77648s3oh16aml1rebv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpT--HXIi7V5sstEqMMKGQoSlQ6BZ5Kzg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "4057727103-1mfsj24i2bd7g77648s3oh16aml1rebv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
