@@ -21,4 +21,7 @@ public class ExampleItem {
     public String getText2(){
         return mText2;
     }
+    public void setText1(String text){
+        mText1 = text;
+    }
 }
